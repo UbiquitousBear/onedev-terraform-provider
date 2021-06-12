@@ -1,13 +1,11 @@
-package client
+package provider
 
 import (
-	"io"
 	"bytes"
-	"fmt"
 	"encoding/json"
+	"fmt"
+	"io"
 	"net/http"
-
-	"github.com/ubiquitousbear/onedev-terraform-provider/api/model"
 )
 
 // Client holds all of the information required to connect to a server
@@ -18,7 +16,7 @@ type Client struct {
 	httpClient *http.Client
 }
 
-func NewClient(hostname string, user, string, token string) *Client {
+func NewClient(hostname string, user string, token string) *Client {
 	return &Client{
 		hostname:   hostname,
 		user:       user,
@@ -27,12 +25,12 @@ func NewClient(hostname string, user, string, token string) *Client {
 	}
 }
 
-func (c *Client) GetAllProjects(baseURL string, user string, authToken string) (*map[string]model.Project, error) {
+func (c *Client) GetAllProjects(baseURL string, user string, authToken string) (*map[string]Project, error) {
 	body, err := c.httpRequest("projects?offset=0&count=100", "GET", bytes.Buffer{})
 	if err != nil {
 		return nil, err
 	}
-	projects := map[string]model.Project{}
+	projects := map[string]Project{}
 	err = json.NewDecoder(body).Decode(&projects)
 	if err != nil {
 		return nil, err
@@ -40,12 +38,12 @@ func (c *Client) GetAllProjects(baseURL string, user string, authToken string) (
 	return &projects, nil
 }
 
-func (c *Client) GetProject(baseURL string, user string, authToken string, id int) (*model.Project, error) {
+func (c *Client) GetProject(baseURL string, user string, authToken string, id int) (*Project, error) {
 	body, err := c.httpRequest(fmt.Sprintf("projects/%d", id), "GET", bytes.Buffer{})
 	if err != nil {
 		return nil, err
 	}
-	item := &model.Project{}
+	item := &Project{}
 	err = json.NewDecoder(body).Decode(item)
 	if err != nil {
 		return nil, err
@@ -53,7 +51,7 @@ func (c *Client) GetProject(baseURL string, user string, authToken string, id in
 	return item, nil
 }
 
-func (c *Client) NewProject(baseURL string, user string, authToken string, project *model.Project) error {
+func (c *Client) NewProject(baseURL string, user string, authToken string, project *Project) error {
 	buf := bytes.Buffer{}
 	err := json.NewEncoder(&buf).Encode(project)
 	if err != nil {
@@ -66,7 +64,7 @@ func (c *Client) NewProject(baseURL string, user string, authToken string, proje
 	return nil
 }
 
-func (c *Client) UpdateProject(baseURL string, user string, authToken string, project *model.Project) error {
+func (c *Client) UpdateProject(baseURL string, user string, authToken string, project *Project) error {
 	buf := bytes.Buffer{}
 	err := json.NewEncoder(&buf).Encode(project)
 	if err != nil {
