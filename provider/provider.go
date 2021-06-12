@@ -24,6 +24,10 @@ func Provider() terraform.ResourceProvider {
 				DefaultFunc: schema.EnvDefaultFunc("ONEDEV_USER", nil),
 			},
 		},
+
+		ResourcesMap: map[string]*schema.Resource{
+			"onedev_project": resourceOnedevProject(),
+		},
 	}
 
 	p.ConfigureFunc = providerConfigure(p)

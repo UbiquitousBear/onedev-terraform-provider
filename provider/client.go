@@ -25,7 +25,7 @@ func NewClient(hostname string, user string, token string) *Client {
 	}
 }
 
-func (c *Client) GetAllProjects(baseURL string, user string, authToken string) (*map[string]Project, error) {
+func (c *Client) GetAllProjects() (*map[string]Project, error) {
 	body, err := c.httpRequest("projects?offset=0&count=100", "GET", bytes.Buffer{})
 	if err != nil {
 		return nil, err
@@ -38,7 +38,7 @@ func (c *Client) GetAllProjects(baseURL string, user string, authToken string) (
 	return &projects, nil
 }
 
-func (c *Client) GetProject(baseURL string, user string, authToken string, id int) (*Project, error) {
+func (c *Client) GetProject(id int) (*Project, error) {
 	body, err := c.httpRequest(fmt.Sprintf("projects/%d", id), "GET", bytes.Buffer{})
 	if err != nil {
 		return nil, err
@@ -51,20 +51,26 @@ func (c *Client) GetProject(baseURL string, user string, authToken string, id in
 	return item, nil
 }
 
-func (c *Client) NewProject(baseURL string, user string, authToken string, project *Project) error {
+func (c *Client) NewProject(project Project) (*Project, error) {
 	buf := bytes.Buffer{}
 	err := json.NewEncoder(&buf).Encode(project)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	_, err = c.httpRequest("projects", "POST", buf)
+	body, err := c.httpRequest("projects", "POST", buf)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	if err != nil {
+		return nil, err
+	}
+	item := &Project{}
+	json.NewDecoder(body).Decode(item)
+
+	return &project, nil
 }
 
-func (c *Client) UpdateProject(baseURL string, user string, authToken string, project *Project) error {
+func (c *Client) UpdateProject(project *Project) error {
 	buf := bytes.Buffer{}
 	err := json.NewEncoder(&buf).Encode(project)
 	if err != nil {
