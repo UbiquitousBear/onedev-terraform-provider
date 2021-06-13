@@ -16,6 +16,7 @@ on:
       - 'v*'
 jobs:
   goreleaser:
+    environment: terraform-provider-release
     runs-on: ubuntu-latest
     steps:
       -
