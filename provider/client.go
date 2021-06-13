@@ -96,13 +96,15 @@ func (c *Client) httpRequest(path, method string, body bytes.Buffer) (closer io.
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Add("Authorization", c.authToken)
+	req.SetBasicAuth(c.user, c.authToken)
 	switch method {
 	case "GET":
 	case "DELETE":
 	default:
 		req.Header.Add("Content-Type", "application/json")
 	}
+
+
 
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
