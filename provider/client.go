@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 )
 
 // Client holds all of the information required to connect to a server
@@ -68,8 +69,11 @@ func (c *Client) NewProject(project Project) (*Project, error) {
 	if err != nil {
 		return nil, err
 	}
+	responseBody, _ := ioutil.ReadAll(body)
+	log.Printf("[DEBUG] received response with body %s", responseBody)
 	item := &Project{}
-	json.NewDecoder(body).Decode(item)
+	intResponseBody, _ := strconv.Atoi(string(responseBody))
+	item.Id = intResponseBody
 
 	return item, nil
 }
