@@ -63,8 +63,10 @@ func resourceOnedevProject() *schema.Resource {
 }
 
 func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
+	forkedFromId, _ := d.GetOk("forkedFromId")
+
 	project := Project{
-		ForkedFromId:           d.Get("forkedFromId").(int),
+		ForkedFromId:           forkedFromId.(int),
 		Name:                   d.Get("name").(string),
 		Description:            d.Get("description").(string),
 		IssueManagementEnabled: d.Get("issueManagementEnabled").(bool),
