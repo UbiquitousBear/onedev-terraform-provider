@@ -4,5 +4,5 @@ go 1.16
 
 require (
 	github.com/hashicorp/terraform-plugin-sdk v1.17.2
-	github.com/ubiquitousbear/terraform-provider-onedev/provider v0.0.0-20210613152507-b1eb55ef8073 // indirect
+	github.com/ubiquitousbear/terraform-provider-onedev/provider v0.0.0-20210613210133-b6602d1820f8
 )
