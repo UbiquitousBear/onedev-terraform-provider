@@ -300,6 +300,8 @@ github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5Cc
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/ubiquitousbear/terraform-provider-onedev/provider v0.0.0-20210613211808-75fa05414e0a h1:7GPbneZM6ApJCKXgB48Abz/06JsjBknpRN/4Yft1EjQ=
 github.com/ubiquitousbear/terraform-provider-onedev/provider v0.0.0-20210613211808-75fa05414e0a/go.mod h1:O6Hk0VuIvpVLcANpZU91dMyOV+svluNWR+/PoaYI4uI=
+github.com/ubiquitousbear/terraform-provider-onedev/provider v0.1.0 h1:iirpGdo7b3qCvFYSncumpBtUa7RfOpYtGQOMEfYo3Ts=
+github.com/ubiquitousbear/terraform-provider-onedev/provider v0.1.0/go.mod h1:O6Hk0VuIvpVLcANpZU91dMyOV+svluNWR+/PoaYI4uI=
 github.com/ulikunitz/xz v0.5.8 h1:ERv8V6GKqVi23rgu5cj9pVfVzJbOqAY2Ntl88O6c2nQ=
 github.com/ulikunitz/xz v0.5.8/go.mod h1:nbz6k7qbPmH4IRqmfOplQw/tblSgqTqBwxkY0oWt/14=
 github.com/vmihailenco/msgpack v3.3.3+incompatible h1:wapg9xDUZDzGCNFlwc5SqI1rvcciqcxEHac4CYj89xI=
@@ -328,6 +330,8 @@ go.opencensus.io v0.22.2/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
 go.opencensus.io v0.22.3/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
 go.opencensus.io v0.22.4 h1:LYy1Hy3MJdrCdMwwzxA/dRok4ejH+RwNGbuoD9fCjto=
 go.opencensus.io v0.22.4/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
+golang.org/dl v0.0.0-20210610154546-0cc6883720ee h1:/dP+h9roJdlwxcn+wiX9EtvrdQhAPxVF9bHHr8lIU74=
+golang.org/dl v0.0.0-20210610154546-0cc6883720ee/go.mod h1:IUMfjQLJQd4UTqG1Z90tenwKoCX93Gn3MAQJMOSBsDQ=
 golang.org/x/crypto v0.0.0-20190219172222-a4c6cb3142f2/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20190426145343-a29dc8fdc734/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
