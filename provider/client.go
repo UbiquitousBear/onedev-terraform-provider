@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
 )
@@ -112,7 +113,9 @@ func (c *Client) httpRequest(path, method string, body bytes.Buffer) (closer io.
 	if err != nil {
 		return nil, err
 	}
-	log.Printf("[DEBUG] received response with body %s", resp.Body)
+	defer resp.Body.Close()
+	responseBody, _ := ioutil.ReadAll(resp.Body)
+	log.Printf("[DEBUG] received response with body %s", responseBody)
 
 	if resp.StatusCode != http.StatusOK {
 		respBody := new(bytes.Buffer)
