@@ -56,7 +56,7 @@ func resourceOnedevProject() *schema.Resource {
 			},
 			"forkedfromid": {
 				Type:     schema.TypeInt,
-				Required: false,
+				Optional: true,
 			},
 		},
 	}
