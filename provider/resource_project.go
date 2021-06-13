@@ -68,7 +68,6 @@ func resourceOnedevProject() *schema.Resource {
 
 func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 	project := Project{
-		Id:                     nil,
 		ForkedFromId:           d.Get("forkedFromId").(int),
 		Name:                   d.Get("name").(string),
 		Description:            d.Get("").(string),
@@ -109,7 +108,6 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 	apiClient := m.(*Client)
 	project := Project{
-		Id:                     nil,
 		ForkedFromId:           d.Get("forkedFromId").(int),
 		Name:                   d.Get("name").(string),
 		Description:            d.Get("").(string),
