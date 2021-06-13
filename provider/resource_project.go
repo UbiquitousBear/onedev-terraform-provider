@@ -1,9 +1,11 @@
 package provider
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/customdiff"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"log"
 	"regexp"
 	"strconv"
 )
@@ -81,9 +83,12 @@ func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 		IssueManagementEnabled: getOrDefault(d, "issuemanagementenabled", false).(bool),
 	}
 
+	log.Printf("[DEBUG] Creating repository: %s", project.Name)
+
 	apiClient := m.(*Client)
 	createResponse, err := apiClient.NewProject(project)
-
+	res, _ := json.Marshal(createResponse)
+	log.Printf("[DEBUG] Received create response: %s", string(res))
 	if err != nil {
 		return err
 	}
