@@ -32,6 +32,8 @@ func (c *Client) GetAllProjects() (*map[string]Project, error) {
 	if err != nil {
 		return nil, err
 	}
+	responseBody, _ := ioutil.ReadAll(body)
+	log.Printf("[DEBUG] received response with body %s", responseBody)
 	projects := map[string]Project{}
 	err = json.NewDecoder(body).Decode(&projects)
 	if err != nil {
@@ -113,12 +115,9 @@ func (c *Client) httpRequest(path, method string, body bytes.Buffer) (closer io.
 	if err != nil {
 		return nil, err
 	}
-	responseBody, _ := ioutil.ReadAll(resp.Body)
-	log.Printf("[DEBUG] received response with body %s", responseBody)
 
 	if resp.StatusCode != http.StatusOK {
 		respBody := new(bytes.Buffer)
-		_, err := respBody.ReadFrom(resp.Body)
 		if err != nil {
 			return nil, fmt.Errorf("got a non 200 status code: %v", resp.StatusCode)
 		}
