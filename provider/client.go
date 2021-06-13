@@ -113,7 +113,6 @@ func (c *Client) httpRequest(path, method string, body bytes.Buffer) (closer io.
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
 	responseBody, _ := ioutil.ReadAll(resp.Body)
 	log.Printf("[DEBUG] received response with body %s", responseBody)
 
