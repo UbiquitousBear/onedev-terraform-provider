@@ -52,7 +52,7 @@ func resourceOnedevProject() *schema.Resource {
 			},
 			"issuemanagementenabled": {
 				Type:     schema.TypeBool,
-				Required: true,
+				Optional: true,
 				Default: false,
 			},
 			"forkedfromid": {
