@@ -92,6 +92,9 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 
 
 	item, err := apiClient.GetProject(itemId)
+	if err != nil {
+		return err
+	}
 	d.SetId(strconv.Itoa(item.Id))
 	d.Set("name", item.Name)
 	d.Set("description", item.Description)
@@ -102,8 +105,14 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
+	itemId, err := strconv.Atoi(d.Id())
+	if err != nil {
+		return err
+	}
+
 	apiClient := m.(*Client)
 	project := Project{
+		Id: 					itemId,
 		ForkedFromId:           d.Get("forkedFromId").(int),
 		Name:                   d.Get("name").(string),
 		Description:            d.Get("description").(string),
@@ -132,12 +141,15 @@ func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 
 func resourceProjectDelete (d *schema.ResourceData, m interface{}) error {
 	apiClient := m.(*Client)
+	itemId, err := strconv.Atoi(d.Id())
+	if err != nil {
+		return err
+	}
 
-	err := apiClient.DeleteProject(d.Get("forkedFromId").(int))
+	err = apiClient.DeleteProject(itemId)
 	if err != nil {
 		return err
 	}
 
 	return nil
 }
-

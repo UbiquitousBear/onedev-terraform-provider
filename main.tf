@@ -1,4 +1,6 @@
-provider "onedev" {}
+provider "onedev" {
+  address = "http://devportal.sh"
+}
 
 resource "onedev_project" "test" {
   name                   = "test-project"
