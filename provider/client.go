@@ -70,17 +70,17 @@ func (c *Client) NewProject(project Project) (*Project, error) {
 	return &project, nil
 }
 
-func (c *Client) UpdateProject(project *Project) error {
+func (c *Client) UpdateProject(project Project) (*Project, error) {
 	buf := bytes.Buffer{}
 	err := json.NewEncoder(&buf).Encode(project)
 	if err != nil {
-		return err
+		return nil,err
 	}
 	_, err = c.httpRequest(fmt.Sprintf("projects/%d", project.Id), "PUT", buf)
 	if err != nil {
-		return err
+		return nil,err
 	}
-	return nil
+	return &project, nil
 }
 
 func (c *Client) DeleteProject(id int) error {
