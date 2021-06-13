@@ -67,7 +67,7 @@ func (c *Client) NewProject(project Project) (*Project, error) {
 	item := &Project{}
 	json.NewDecoder(body).Decode(item)
 
-	return &project, nil
+	return item, nil
 }
 
 func (c *Client) UpdateProject(project Project) (*Project, error) {
