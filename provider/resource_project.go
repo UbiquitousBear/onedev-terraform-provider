@@ -57,6 +57,7 @@ func resourceOnedevProject() *schema.Resource {
 			"forkedfromid": {
 				Type:     schema.TypeInt,
 				Optional: true,
+
 			},
 		},
 	}
@@ -64,6 +65,11 @@ func resourceOnedevProject() *schema.Resource {
 
 func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 	forkedFromId, _ := d.GetOk("forkedFromId")
+
+	if forkedFromId == nil {
+		forkedFromId = 0
+	}
+
 
 	project := Project{
 		ForkedFromId:           forkedFromId.(int),
