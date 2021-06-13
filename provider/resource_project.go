@@ -2,18 +2,18 @@ package provider
 
 import (
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"regexp"
 	"strconv"
 )
 
-func validateName(v interface{}, k string) (ws []string, es []error) {
+func validateName(v interface{}, _ string) (ws []string, es []error) {
 	var errs []error
 	var warns []string
 	value, ok := v.(string)
 	if !ok {
-		errs = append(errs, fmt.Errorf("Expected name to be string"))
+		errs = append(errs, fmt.Errorf("expected name to be string"))
 		return warns, errs
 	}
 	whiteSpace := regexp.MustCompile(`\s+`)
@@ -50,10 +50,6 @@ func resourceOnedevProject() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"id": {
-				Type:     schema.TypeInt,
-				Computed: true,
-			},
 			"issueManagementEnabled": {
 				Type:     schema.TypeBool,
 				Required: true,
@@ -70,7 +66,7 @@ func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 	project := Project{
 		ForkedFromId:           d.Get("forkedFromId").(int),
 		Name:                   d.Get("name").(string),
-		Description:            d.Get("").(string),
+		Description:            d.Get("description").(string),
 		IssueManagementEnabled: d.Get("issueManagementEnabled").(bool),
 	}
 
@@ -110,7 +106,7 @@ func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 	project := Project{
 		ForkedFromId:           d.Get("forkedFromId").(int),
 		Name:                   d.Get("name").(string),
-		Description:            d.Get("").(string),
+		Description:            d.Get("description").(string),
 		IssueManagementEnabled: d.Get("issueManagementEnabled").(bool),
 	}
 
