@@ -53,29 +53,32 @@ func resourceOnedevProject() *schema.Resource {
 			"issuemanagementenabled": {
 				Type:     schema.TypeBool,
 				Required: true,
+				Default: false,
 			},
 			"forkedfromid": {
 				Type:     schema.TypeInt,
 				Optional: true,
-
 			},
 		},
 	}
 }
 
-func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
-	forkedFromId, _ := d.GetOk("forkedFromId")
+func getOrDefault(d *schema.ResourceData, field string, defaultVal interface{}) interface{} {
+	val, _ := d.GetOk(field)
 
-	if forkedFromId == nil {
-		forkedFromId = 0
+	if val == nil {
+		return defaultVal
+	} else {
+		return val
 	}
+}
 
-
+func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 	project := Project{
-		ForkedFromId:           forkedFromId.(int),
+		ForkedFromId:           getOrDefault(d, "forkedfromid", 0).(int),
 		Name:                   d.Get("name").(string),
 		Description:            d.Get("description").(string),
-		IssueManagementEnabled: d.Get("issueManagementEnabled").(bool),
+		IssueManagementEnabled: getOrDefault(d, "issuemanagementenabled", false).(bool),
 	}
 
 	apiClient := m.(*Client)
@@ -106,8 +109,8 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 	d.SetId(strconv.Itoa(item.Id))
 	d.Set("name", item.Name)
 	d.Set("description", item.Description)
-	d.Set("forkedFromId", item.ForkedFromId)
-	d.Set("issueManagementEnabled", item.IssueManagementEnabled)
+	d.Set("forkedfromid", item.ForkedFromId)
+	d.Set("issuemanagementenabled", item.IssueManagementEnabled)
 
 	return nil
 }
@@ -121,10 +124,10 @@ func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 	apiClient := m.(*Client)
 	project := Project{
 		Id: 					itemId,
-		ForkedFromId:           d.Get("forkedFromId").(int),
+		ForkedFromId:           d.Get("forkedfromid").(int),
 		Name:                   d.Get("name").(string),
 		Description:            d.Get("description").(string),
-		IssueManagementEnabled: d.Get("issueManagementEnabled").(bool),
+		IssueManagementEnabled: d.Get("issuemanagementenabled").(bool),
 	}
 
 	updateResponse, err := apiClient.UpdateProject(project)
@@ -140,8 +143,8 @@ func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 	d.SetId(strconv.Itoa(item.Id))
 	d.Set("name", item.Name)
 	d.Set("description", item.Description)
-	d.Set("forkedFromId", item.ForkedFromId)
-	d.Set("issueManagementEnabled", item.IssueManagementEnabled)
+	d.Set("forkedfromid", item.ForkedFromId)
+	d.Set("issuemanagementenabled", item.IssueManagementEnabled)
 
 	return nil
 
