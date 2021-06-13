@@ -1,4 +1,4 @@
-module github.com/ubiquitousbear/onedev-terraform-provider/provider
+module github.com/ubiquitousbear/terraform-provider-onedev/provider
 
 go 1.16
 
