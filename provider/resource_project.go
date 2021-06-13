@@ -50,11 +50,11 @@ func resourceOnedevProject() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"issueManagementEnabled": {
+			"issuemanagementenabled": {
 				Type:     schema.TypeBool,
 				Required: true,
 			},
-			"forkedFromId": {
+			"forkedfromid": {
 				Type:     schema.TypeInt,
 				Required: false,
 			},
