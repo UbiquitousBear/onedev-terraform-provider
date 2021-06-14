@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/customdiff"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/ubiquitousbear/onedev-api"
 	"log"
 	"regexp"
 	"strconv"
@@ -76,7 +77,7 @@ func getOrDefault(d *schema.ResourceData, field string, defaultVal interface{}) 
 }
 
 func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
-	project := Project{
+	project := onedev_api.Project{
 		ForkedFromId:           getOrDefault(d, "forkedfromid", 0).(int),
 		Name:                   d.Get("name").(string),
 		Description:            d.Get("description").(string),
@@ -85,7 +86,7 @@ func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 
 	log.Printf("[DEBUG] Creating repository: %s", project.Name)
 
-	apiClient := m.(*Client)
+	apiClient := m.(*onedev_api.Client)
 	createResponse, err := apiClient.NewProject(project)
 	res, _ := json.Marshal(createResponse)
 	log.Printf("[DEBUG] Received create response: %s", string(res))
@@ -99,7 +100,7 @@ func resourceProjectCreate(d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
-	apiClient := m.(*Client)
+	apiClient := m.(*onedev_api.Client)
 
 	itemId, err := strconv.Atoi(d.Id())
 	if err != nil {
@@ -126,8 +127,8 @@ func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-	apiClient := m.(*Client)
-	project := Project{
+	apiClient := m.(*onedev_api.Client)
+	project := onedev_api.Project{
 		Id: 					itemId,
 		ForkedFromId:           d.Get("forkedfromid").(int),
 		Name:                   d.Get("name").(string),
@@ -156,7 +157,7 @@ func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 }
 
 func resourceProjectDelete (d *schema.ResourceData, m interface{}) error {
-	apiClient := m.(*Client)
+	apiClient := m.(*onedev_api.Client)
 	itemId, err := strconv.Atoi(d.Id())
 	if err != nil {
 		return err

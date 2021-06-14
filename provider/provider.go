@@ -3,6 +3,7 @@ package provider
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"github.com/ubiquitousbear/onedev-api"
 )
 
 func Provider() terraform.ResourceProvider {
@@ -40,6 +41,6 @@ func providerConfigure(p *schema.Provider) schema.ConfigureFunc {
 		address := d.Get("address").(string)
 		user := d.Get("user").(string)
 		token := d.Get("token").(string)
-		return NewClient(address, user, token), nil
+		return onedev_api.NewClient(address, user, token), nil
 	}
 }
