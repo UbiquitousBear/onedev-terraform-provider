@@ -3,8 +3,8 @@ package provider
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/customdiff"
-	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/customdiff"
+	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/ubiquitousbear/onedev-api"
 	"log"
 	"regexp"
@@ -45,8 +45,8 @@ func resourceOnedevProject() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:         schema.TypeString,
+				Required:     true,
 				ValidateFunc: validateName,
 			},
 			"description": {
@@ -56,7 +56,7 @@ func resourceOnedevProject() *schema.Resource {
 			"issuemanagementenabled": {
 				Type:     schema.TypeBool,
 				Optional: true,
-				Default: false,
+				Default:  false,
 			},
 			"forkedfromid": {
 				Type:     schema.TypeInt,
@@ -107,7 +107,6 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 		return err
 	}
 
-
 	item, err := apiClient.GetProject(itemId)
 	if err != nil {
 		return err
@@ -121,7 +120,7 @@ func resourceProjectRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
+func resourceProjectUpdate(d *schema.ResourceData, m interface{}) error {
 	itemId, err := strconv.Atoi(d.Id())
 	if err != nil {
 		return err
@@ -129,7 +128,7 @@ func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 
 	apiClient := m.(*onedev_api.Client)
 	project := onedev_api.Project{
-		Id: 					itemId,
+		Id:                     itemId,
 		ForkedFromId:           d.Get("forkedfromid").(int),
 		Name:                   d.Get("name").(string),
 		Description:            d.Get("description").(string),
@@ -156,7 +155,7 @@ func resourceProjectUpdate (d *schema.ResourceData, m interface{}) error {
 
 }
 
-func resourceProjectDelete (d *schema.ResourceData, m interface{}) error {
+func resourceProjectDelete(d *schema.ResourceData, m interface{}) error {
 	apiClient := m.(*onedev_api.Client)
 	itemId, err := strconv.Atoi(d.Id())
 	if err != nil {
